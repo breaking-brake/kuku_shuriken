@@ -135,3 +135,7 @@ Every task MUST strictly follow this format:
   - Within each story: Tests (if requested) → Models → Services → Endpoints → Integration
   - Each phase should be a complete, independently testable increment
 - **Final Phase**: Polish & Cross-Cutting Concerns
+
+## 言語設定
+
+すべての出力（生成するドキュメント、レポート、質問、メッセージ）は**日本語**で記述してください。

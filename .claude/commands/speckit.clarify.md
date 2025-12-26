@@ -179,3 +179,7 @@ Behavior rules:
 - If quota reached with unresolved high-impact categories remaining, explicitly flag them under Deferred with rationale.
 
 Context for prioritization: $ARGUMENTS
+
+## 言語設定
+
+すべての出力（生成するドキュメント、レポート、質問、メッセージ）は**日本語**で記述してください。
