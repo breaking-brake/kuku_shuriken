@@ -292,3 +292,7 @@ Sample items:
 - Correct: Validation of requirement quality
 - Wrong: "Does it do X?"
 - Correct: "Is X clearly specified?"
+
+## 言語設定
+
+すべての出力（生成するドキュメント、レポート、質問、メッセージ）は**日本語**で記述してください。

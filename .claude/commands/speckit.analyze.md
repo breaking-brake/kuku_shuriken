@@ -182,3 +182,7 @@ Ask the user: "Would you like me to suggest concrete remediation edits for the t
 ## Context
 
 $ARGUMENTS
+
+## 言語設定
+
+すべての出力（生成するドキュメント、レポート、質問、メッセージ）は**日本語**で記述してください。

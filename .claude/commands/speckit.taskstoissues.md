@@ -28,3 +28,7 @@ git config --get remote.origin.url
 
 > [!CAUTION]
 > UNDER NO CIRCUMSTANCES EVER CREATE ISSUES IN REPOSITORIES THAT DO NOT MATCH THE REMOTE URL
+
+## 言語設定
+
+すべての出力（生成するドキュメント、レポート、質問、メッセージ）は**日本語**で記述してください。
