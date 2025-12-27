@@ -2,11 +2,11 @@ import 'swipe_direction.dart';
 
 /// 難易度を表すEnum
 enum Difficulty {
-  /// かんたん: 2方向（上下）
+  /// かんたん: 2方向（左右）
   easy(
     label: 'かんたん',
     targetCount: 2,
-    directions: [SwipeDirection.up, SwipeDirection.down],
+    directions: [SwipeDirection.left, SwipeDirection.right],
   ),
 
   /// ふつう: 3方向（上左右）

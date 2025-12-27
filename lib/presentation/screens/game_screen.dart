@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../data/audio/audio_player.dart';
 import '../../domain/entities/difficulty.dart';
 import '../../domain/entities/game_state.dart';
+import '../../domain/entities/question.dart';
 import '../../domain/entities/swipe_direction.dart';
 import '../../domain/usecases/audio_usecase.dart';
 import '../../domain/usecases/game_usecase.dart';
@@ -31,6 +32,7 @@ class _GameScreenState extends State<GameScreen> {
   bool _isAnimating = false;
   SwipeDirection? _lastSwipeDirection;
   bool? _lastAnswerCorrect;
+  Question? _lastQuestion;
 
   @override
   void initState() {
@@ -62,8 +64,9 @@ class _GameScreenState extends State<GameScreen> {
 
   /// 難易度に応じたスワイプ方向を制限する
   SwipeOptions _getAllowedSwipeOptions() {
-    final directions =
-        _gameState.currentTargets.map((t) => t.direction).toSet();
+    final directions = _gameState.currentTargets
+        .map((t) => t.direction)
+        .toSet();
     return SwipeOptions.only(
       up: directions.contains(SwipeDirection.up),
       down: directions.contains(SwipeDirection.down),
@@ -95,6 +98,7 @@ class _GameScreenState extends State<GameScreen> {
       _isAnimating = true;
       _lastSwipeDirection = swipeDirection;
       _lastAnswerCorrect = selectedTarget.isCorrect;
+      _lastQuestion = _gameState.currentQuestion;
     });
 
     // 効果音再生
@@ -116,6 +120,7 @@ class _GameScreenState extends State<GameScreen> {
       _isAnimating = false;
       _lastSwipeDirection = null;
       _lastAnswerCorrect = null;
+      _lastQuestion = null;
     });
 
     // ゲーム終了判定
@@ -139,19 +144,42 @@ class _GameScreenState extends State<GameScreen> {
       body: SafeArea(
         child: Stack(
           children: [
-            // ヘッダー（進捗表示と連続正解数）
+            // ヘッダー（戻るボタン、進捗表示、連続正解数）
             Positioned(
               top: 0,
               left: 0,
               right: 0,
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
+                  horizontal: 12,
                   vertical: 10,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    // 戻るボタン
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.1),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.indigo,
+                          size: 24,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 12),
                     // 進捗表示
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -178,7 +206,7 @@ class _GameScreenState extends State<GameScreen> {
                         ),
                       ),
                     ),
-
+                    const Spacer(),
                     // 連続正解数表示
                     if (_gameState.currentStreak > 0)
                       Container(
@@ -224,8 +252,8 @@ class _GameScreenState extends State<GameScreen> {
             Center(
               child: _gameState.currentQuestion != null && !_isAnimating
                   ? SizedBox(
-                      width: 250,
-                      height: 250,
+                      width: 180,
+                      height: 180,
                       child: AppinioSwiper(
                         controller: _swiperController,
                         cardCount: 1,
@@ -247,12 +275,15 @@ class _GameScreenState extends State<GameScreen> {
             ),
 
             // 手裏剣アニメーション
-            if (_isAnimating && _lastSwipeDirection != null)
+            if (_isAnimating &&
+                _lastSwipeDirection != null &&
+                _lastQuestion != null)
               Center(
                 child: ShurikenAnimation(
                   direction: _lastSwipeDirection!,
                   isCorrect: _lastAnswerCorrect ?? false,
                   onComplete: _onAnimationComplete,
+                  question: _lastQuestion!,
                 ),
               ),
           ],

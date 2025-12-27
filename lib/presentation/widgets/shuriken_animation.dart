@@ -2,19 +2,24 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/question.dart';
 import '../../domain/entities/swipe_direction.dart';
+import 'shuriken_clipper.dart';
 
 /// 手裏剣アニメーションを表示するWidget
+/// QuestionCardと同じデザインで、回転しながら飛んでいく
 class ShurikenAnimation extends StatefulWidget {
   final SwipeDirection direction;
   final bool isCorrect;
   final VoidCallback onComplete;
+  final Question question;
 
   const ShurikenAnimation({
     super.key,
     required this.direction,
     required this.isCorrect,
     required this.onComplete,
+    required this.question,
   });
 
   @override
@@ -28,21 +33,30 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
   late Animation<Offset> _moveAnimation;
   late Animation<double> _rotateAnimation;
 
+  /// 方向に応じたアニメーション時間を取得
+  /// 画面外に消えるまでの見た目の速さを揃えるため、左右は遅くする
+  Duration _getAnimationDuration() {
+    switch (widget.direction) {
+      case SwipeDirection.up:
+      case SwipeDirection.down:
+        return const Duration(milliseconds: 600);
+      case SwipeDirection.left:
+      case SwipeDirection.right:
+        return const Duration(milliseconds: 900); // 左右は遅め
+    }
+  }
+
   @override
   void initState() {
     super.initState();
 
+    final duration = _getAnimationDuration();
+
     // 移動アニメーション
-    _moveController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
+    _moveController = AnimationController(duration: duration, vsync: this);
 
     // 回転アニメーション
-    _rotateController = AnimationController(
-      duration: const Duration(milliseconds: 300),
-      vsync: this,
-    );
+    _rotateController = AnimationController(duration: duration, vsync: this);
 
     final endOffset = _getEndOffset();
 
@@ -53,7 +67,7 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
 
     _rotateAnimation = Tween<double>(
       begin: 0,
-      end: 4 * math.pi, // 2回転
+      end: 3 * math.pi, // 1.5回転
     ).animate(CurvedAnimation(parent: _rotateController, curve: Curves.linear));
 
     _moveController.addStatusListener((status) {
@@ -68,8 +82,8 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
   }
 
   Offset _getEndOffset() {
-    const distance = 150.0;
-    final missOffset = widget.isCorrect ? 0.0 : 30.0;
+    const distance = 500.0; // 画面外まで飛んでいく
+    final missOffset = widget.isCorrect ? 0.0 : 60.0;
 
     switch (widget.direction) {
       case SwipeDirection.up:
@@ -100,61 +114,31 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
           child: Transform.rotate(angle: _rotateAnimation.value, child: child),
         );
       },
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: BoxDecoration(
-          color: Colors.grey[800],
-          shape: BoxShape.circle,
+      // QuestionCardと同じデザイン
+      child: ClipPath(
+        clipper: ShurikenClipper(),
+        child: Container(
+          width: 150,
+          height: 150,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [Colors.grey[300]!, Colors.grey[500]!, Colors.grey[400]!],
+            ),
+          ),
+          child: Center(
+            child: Text(
+              widget.question.displayText,
+              style: const TextStyle(
+                fontSize: 36,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ),
         ),
-        child: CustomPaint(painter: _ShurikenPainter()),
       ),
     );
   }
-}
-
-/// 手裏剣を描画するCustomPainter
-class _ShurikenPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.grey[700]!
-      ..style = PaintingStyle.fill;
-
-    final center = Offset(size.width / 2, size.height / 2);
-    final radius = size.width / 2;
-
-    // 4つの刃を描画
-    for (int i = 0; i < 4; i++) {
-      final angle = i * math.pi / 2;
-      final path = Path();
-
-      final tipX = center.dx + radius * 0.9 * math.cos(angle);
-      final tipY = center.dy + radius * 0.9 * math.sin(angle);
-
-      final side1X = center.dx + radius * 0.3 * math.cos(angle + 0.5);
-      final side1Y = center.dy + radius * 0.3 * math.sin(angle + 0.5);
-
-      final side2X = center.dx + radius * 0.3 * math.cos(angle - 0.5);
-      final side2Y = center.dy + radius * 0.3 * math.sin(angle - 0.5);
-
-      path.moveTo(center.dx, center.dy);
-      path.lineTo(side1X, side1Y);
-      path.lineTo(tipX, tipY);
-      path.lineTo(side2X, side2Y);
-      path.close();
-
-      canvas.drawPath(path, paint);
-    }
-
-    // 中心の円
-    final centerPaint = Paint()
-      ..color = Colors.grey[600]!
-      ..style = PaintingStyle.fill;
-
-    canvas.drawCircle(center, radius * 0.2, centerPaint);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
