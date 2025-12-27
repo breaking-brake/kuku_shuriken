@@ -90,10 +90,10 @@
 
 ### ユーザーストーリー2の実装
 
-- [ ] T024 [US2] DifficultyScreenを実装 - 3つの難易度ボタン（lib/presentation/screens/difficulty_screen.dart）
-- [ ] T025 [US2] DifficultyScreenからGameScreenへの画面遷移を実装
-- [ ] T026 [US2] GameScreenを難易度に応じた的の配置に対応させる
-- [ ] T027 [US2] main.dartでルーティング設定 - DifficultyScreenを初期画面に（lib/main.dart）
+- [x] T024 [US2] DifficultyScreenを実装 - 3つの難易度ボタン（lib/presentation/screens/difficulty_screen.dart）
+- [x] T025 [US2] DifficultyScreenからGameScreenへの画面遷移を実装
+- [x] T026 [US2] GameScreenを難易度に応じた的の配置に対応させる
+- [x] T027 [US2] main.dartでルーティング設定 - DifficultyScreenを初期画面に（lib/main.dart）
 
 **チェックポイント**: 難易度選択後、選択に応じた的の数でゲームが開始される
 
