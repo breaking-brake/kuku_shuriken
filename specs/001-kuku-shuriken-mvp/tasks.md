@@ -69,14 +69,14 @@
 
 ### ユーザーストーリー1の実装
 
-- [ ] T016 [P] [US1] QuestionCardウィジェットを作成（lib/presentation/widgets/question_card.dart）
-- [ ] T017 [P] [US1] TargetWidgetを作成（lib/presentation/widgets/target_widget.dart）
-- [ ] T018 [US1] ShurikenAnimationウィジェットを作成（lib/presentation/widgets/shuriken_animation.dart）
-- [ ] T019 [US1] GameScreenを実装 - appinio_swiperでカードスワイプUI（lib/presentation/screens/game_screen.dart）※T016-T018に依存
-- [ ] T020 [US1] GameScreenにスワイプ方向判定と正解判定ロジックを追加
-- [ ] T021 [US1] GameScreenに正解時アニメーション（手裏剣が的に刺さる）を実装
-- [ ] T022 [US1] GameScreenに不正解時アニメーション（手裏剣が外れる）を実装
-- [ ] T023 [US1] GameScreenに効果音再生を統合（AudioUseCase使用）
+- [x] T016 [P] [US1] QuestionCardウィジェットを作成（lib/presentation/widgets/question_card.dart）
+- [x] T017 [P] [US1] TargetWidgetを作成（lib/presentation/widgets/target_widget.dart）
+- [x] T018 [US1] ShurikenAnimationウィジェットを作成（lib/presentation/widgets/shuriken_animation.dart）
+- [x] T019 [US1] GameScreenを実装 - appinio_swiperでカードスワイプUI（lib/presentation/screens/game_screen.dart）※T016-T018に依存
+- [x] T020 [US1] GameScreenにスワイプ方向判定と正解判定ロジックを追加
+- [x] T021 [US1] GameScreenに正解時アニメーション（手裏剣が的に刺さる）を実装
+- [x] T022 [US1] GameScreenに不正解時アニメーション（手裏剣が外れる）を実装
+- [x] T023 [US1] GameScreenに効果音再生を統合（AudioUseCase使用）
 
 **チェックポイント**: フリック操作で九九問題に回答でき、正解・不正解のフィードバックが動作
 
