@@ -53,21 +53,20 @@ class _GameScreenState extends State<GameScreen> {
     switch (direction) {
       case EightDirection.up:
         return SwipeDirection.up;
-      case EightDirection.down:
-        return SwipeDirection.down;
-      case EightDirection.left:
-        return SwipeDirection.left;
+      case EightDirection.upRight:
+        return SwipeDirection.upRight;
       case EightDirection.right:
         return SwipeDirection.right;
-      // Diagonal directions - map to nearest cardinal for now
-      case EightDirection.upRight:
-        return SwipeDirection.right;
       case EightDirection.downRight:
-        return SwipeDirection.right;
+        return SwipeDirection.downRight;
+      case EightDirection.down:
+        return SwipeDirection.down;
       case EightDirection.downLeft:
+        return SwipeDirection.downLeft;
+      case EightDirection.left:
         return SwipeDirection.left;
       case EightDirection.upLeft:
-        return SwipeDirection.left;
+        return SwipeDirection.upLeft;
     }
   }
 
@@ -78,9 +77,13 @@ class _GameScreenState extends State<GameScreen> {
         .toSet();
     return EightSwipeOptions.only(
       up: directions.contains(SwipeDirection.up),
-      down: directions.contains(SwipeDirection.down),
-      left: directions.contains(SwipeDirection.left),
+      upRight: directions.contains(SwipeDirection.upRight),
       right: directions.contains(SwipeDirection.right),
+      downRight: directions.contains(SwipeDirection.downRight),
+      down: directions.contains(SwipeDirection.down),
+      downLeft: directions.contains(SwipeDirection.downLeft),
+      left: directions.contains(SwipeDirection.left),
+      upLeft: directions.contains(SwipeDirection.upLeft),
     );
   }
 
