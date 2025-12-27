@@ -8,11 +8,7 @@ class TargetWidget extends StatelessWidget {
   final Target target;
   final bool showHit;
 
-  const TargetWidget({
-    super.key,
-    required this.target,
-    this.showHit = false,
-  });
+  const TargetWidget({super.key, required this.target, this.showHit = false});
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +20,7 @@ class TargetWidget extends StatelessWidget {
         color: showHit
             ? (target.isCorrect ? Colors.green : Colors.red)
             : Colors.orange,
-        border: Border.all(
-          color: Colors.brown,
-          width: 4,
-        ),
+        border: Border.all(color: Colors.brown, width: 4),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.3),

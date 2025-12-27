@@ -13,8 +13,5 @@ class Question {
   /// 問題の表示文字列
   String get displayText => '$multiplicand × $multiplier';
 
-  const Question({
-    required this.multiplicand,
-    required this.multiplier,
-  });
+  const Question({required this.multiplicand, required this.multiplier});
 }

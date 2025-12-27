@@ -37,10 +37,7 @@ class DifficultyScreen extends StatelessWidget {
               const SizedBox(height: 20),
               const Text(
                 'むずかしさをえらんでね',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 18, color: Colors.grey),
               ),
               const SizedBox(height: 60),
 
@@ -124,10 +121,7 @@ class _DifficultyButton extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               _directionText,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.white70,
-              ),
+              style: const TextStyle(fontSize: 16, color: Colors.white70),
             ),
           ],
         ),

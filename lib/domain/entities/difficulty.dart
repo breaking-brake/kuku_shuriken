@@ -17,11 +17,7 @@ enum Difficulty {
   ),
 
   /// むずかしい: 4方向（上下左右）
-  hard(
-    label: 'むずかしい',
-    targetCount: 4,
-    directions: SwipeDirection.values,
-  );
+  hard(label: 'むずかしい', targetCount: 4, directions: SwipeDirection.values);
 
   final String label;
   final int targetCount;

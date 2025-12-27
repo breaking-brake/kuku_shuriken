@@ -49,18 +49,12 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
     _moveAnimation = Tween<Offset>(
       begin: Offset.zero,
       end: endOffset,
-    ).animate(CurvedAnimation(
-      parent: _moveController,
-      curve: Curves.easeOut,
-    ));
+    ).animate(CurvedAnimation(parent: _moveController, curve: Curves.easeOut));
 
     _rotateAnimation = Tween<double>(
       begin: 0,
       end: 4 * math.pi, // 2回転
-    ).animate(CurvedAnimation(
-      parent: _rotateController,
-      curve: Curves.linear,
-    ));
+    ).animate(CurvedAnimation(parent: _rotateController, curve: Curves.linear));
 
     _moveController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -103,10 +97,7 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
       builder: (context, child) {
         return Transform.translate(
           offset: _moveAnimation.value,
-          child: Transform.rotate(
-            angle: _rotateAnimation.value,
-            child: child,
-          ),
+          child: Transform.rotate(angle: _rotateAnimation.value, child: child),
         );
       },
       child: Container(
@@ -116,9 +107,7 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
           color: Colors.grey[800],
           shape: BoxShape.circle,
         ),
-        child: CustomPaint(
-          painter: _ShurikenPainter(),
-        ),
+        child: CustomPaint(painter: _ShurikenPainter()),
       ),
     );
   }

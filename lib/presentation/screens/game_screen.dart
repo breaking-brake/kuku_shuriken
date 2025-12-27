@@ -16,10 +16,7 @@ import 'result_screen.dart';
 class GameScreen extends StatefulWidget {
   final Difficulty difficulty;
 
-  const GameScreen({
-    super.key,
-    required this.difficulty,
-  });
+  const GameScreen({super.key, required this.difficulty});
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -61,6 +58,18 @@ class _GameScreenState extends State<GameScreen> {
       case AxisDirection.right:
         return SwipeDirection.right;
     }
+  }
+
+  /// 難易度に応じたスワイプ方向を制限する
+  SwipeOptions _getAllowedSwipeOptions() {
+    final directions =
+        _gameState.currentTargets.map((t) => t.direction).toSet();
+    return SwipeOptions.only(
+      up: directions.contains(SwipeDirection.up),
+      down: directions.contains(SwipeDirection.down),
+      left: directions.contains(SwipeDirection.left),
+      right: directions.contains(SwipeDirection.right),
+    );
   }
 
   void _handleSwipe(int index, AxisDirection direction) {
@@ -119,9 +128,7 @@ class _GameScreenState extends State<GameScreen> {
     final result = _gameUseCase.getResult(_gameState);
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (context) => ResultScreen(result: result),
-      ),
+      MaterialPageRoute(builder: (context) => ResultScreen(result: result)),
     );
   }
 
@@ -192,10 +199,7 @@ class _GameScreenState extends State<GameScreen> {
                         ),
                         child: Row(
                           children: [
-                            const Text(
-                              '🔥',
-                              style: TextStyle(fontSize: 16),
-                            ),
+                            const Text('🔥', style: TextStyle(fontSize: 16)),
                             const SizedBox(width: 4),
                             Text(
                               '${_gameState.currentStreak}れんぞく',
@@ -225,7 +229,7 @@ class _GameScreenState extends State<GameScreen> {
                       child: AppinioSwiper(
                         controller: _swiperController,
                         cardCount: 1,
-                        swipeOptions: const SwipeOptions.all(),
+                        swipeOptions: _getAllowedSwipeOptions(),
                         threshold: 50,
                         onSwipeEnd: (previousIndex, targetIndex, activity) {
                           if (activity is Swipe) {

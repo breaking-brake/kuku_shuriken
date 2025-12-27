@@ -47,9 +47,11 @@ class GameUseCaseImpl implements GameUseCase {
         multiplier: multiplier,
       );
       // 重複を避ける
-      if (!questions.any((q) =>
-          q.multiplicand == question.multiplicand &&
-          q.multiplier == question.multiplier)) {
+      if (!questions.any(
+        (q) =>
+            q.multiplicand == question.multiplicand &&
+            q.multiplier == question.multiplier,
+      )) {
         questions.add(question);
       }
     }
@@ -65,8 +67,10 @@ class GameUseCaseImpl implements GameUseCase {
     final correctDirection = directions[_random.nextInt(directions.length)];
 
     // 不正解の選択肢を生成
-    final wrongAnswers =
-        _generateWrongAnswers(correctAnswer, directions.length - 1);
+    final wrongAnswers = _generateWrongAnswers(
+      correctAnswer,
+      directions.length - 1,
+    );
 
     // 的のリストを作成
     final targets = <Target>[];
@@ -74,17 +78,17 @@ class GameUseCaseImpl implements GameUseCase {
 
     for (final direction in directions) {
       if (direction == correctDirection) {
-        targets.add(Target(
-          value: correctAnswer,
-          direction: direction,
-          isCorrect: true,
-        ));
+        targets.add(
+          Target(value: correctAnswer, direction: direction, isCorrect: true),
+        );
       } else {
-        targets.add(Target(
-          value: wrongAnswers[wrongIndex++],
-          direction: direction,
-          isCorrect: false,
-        ));
+        targets.add(
+          Target(
+            value: wrongAnswers[wrongIndex++],
+            direction: direction,
+            isCorrect: false,
+          ),
+        );
       }
     }
 

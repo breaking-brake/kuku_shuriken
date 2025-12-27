@@ -8,10 +8,7 @@ import 'game_screen.dart';
 class ResultScreen extends StatelessWidget {
   final GameResult result;
 
-  const ResultScreen({
-    super.key,
-    required this.result,
-  });
+  const ResultScreen({super.key, required this.result});
 
   String _getResultMessage() {
     final accuracy = result.accuracy;
@@ -74,10 +71,7 @@ class ResultScreen extends StatelessWidget {
                     ),
                     const Text(
                       'せいかい！',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(fontSize: 24, color: Colors.grey),
                     ),
                     const SizedBox(height: 20),
                     const Divider(),
@@ -110,9 +104,8 @@ class ResultScreen extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => GameScreen(
-                        difficulty: result.difficulty,
-                      ),
+                      builder: (context) =>
+                          GameScreen(difficulty: result.difficulty),
                     ),
                   );
                 },
@@ -144,10 +137,7 @@ class _ScoreItem extends StatelessWidget {
   final String label;
   final String value;
 
-  const _ScoreItem({
-    required this.label,
-    required this.value,
-  });
+  const _ScoreItem({required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -161,13 +151,7 @@ class _ScoreItem extends StatelessWidget {
             color: Colors.indigo,
           ),
         ),
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
+        Text(label, style: const TextStyle(fontSize: 14, color: Colors.grey)),
       ],
     );
   }
