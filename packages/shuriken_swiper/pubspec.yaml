@@ -1,0 +1,17 @@
+name: shuriken_swiper
+description: A 360-degree swiper widget supporting up to 8 directions. Fork of appinio_swiper.
+version: 0.1.0
+repository: https://github.com/your-name/shuriken_swiper
+
+environment:
+  sdk: ^3.10.4
+  flutter: ">=3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0

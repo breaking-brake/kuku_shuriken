@@ -9,7 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  appinio_swiper: ^2.1.1
+  shuriken_swiper:
+    path: packages/shuriken_swiper
   audioplayers: ^6.0.0
 
 dev_dependencies:
