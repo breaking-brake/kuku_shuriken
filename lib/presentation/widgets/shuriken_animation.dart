@@ -34,7 +34,7 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
   late Animation<double> _rotateAnimation;
 
   /// 方向に応じたアニメーション時間を取得
-  /// 画面外に消えるまでの見た目の速さを揃えるため、左右は遅くする
+  /// 画面外に消えるまでの見た目の速さを揃えるため、方向によって調整
   Duration _getAnimationDuration() {
     switch (widget.direction) {
       case SwipeDirection.up:
@@ -43,6 +43,11 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
       case SwipeDirection.left:
       case SwipeDirection.right:
         return const Duration(milliseconds: 900); // 左右は遅め
+      case SwipeDirection.upRight:
+      case SwipeDirection.upLeft:
+      case SwipeDirection.downRight:
+      case SwipeDirection.downLeft:
+        return const Duration(milliseconds: 750); // 斜めは中間
     }
   }
 
@@ -83,6 +88,7 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
 
   Offset _getEndOffset() {
     const distance = 500.0; // 画面外まで飛んでいく
+    const diagonalDistance = 400.0; // 斜め方向の距離
     final missOffset = widget.isCorrect ? 0.0 : 60.0;
 
     switch (widget.direction) {
@@ -94,6 +100,26 @@ class _ShurikenAnimationState extends State<ShurikenAnimation>
         return Offset(-distance, widget.isCorrect ? 0 : missOffset);
       case SwipeDirection.right:
         return Offset(distance, widget.isCorrect ? 0 : -missOffset);
+      case SwipeDirection.upRight:
+        return Offset(
+          diagonalDistance + (widget.isCorrect ? 0 : missOffset),
+          -diagonalDistance,
+        );
+      case SwipeDirection.upLeft:
+        return Offset(
+          -diagonalDistance + (widget.isCorrect ? 0 : -missOffset),
+          -diagonalDistance,
+        );
+      case SwipeDirection.downRight:
+        return Offset(
+          diagonalDistance + (widget.isCorrect ? 0 : missOffset),
+          diagonalDistance,
+        );
+      case SwipeDirection.downLeft:
+        return Offset(
+          -diagonalDistance + (widget.isCorrect ? 0 : -missOffset),
+          diagonalDistance,
+        );
     }
   }
 

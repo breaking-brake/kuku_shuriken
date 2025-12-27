@@ -47,12 +47,20 @@ class TargetWidget extends StatelessWidget {
     switch (direction) {
       case SwipeDirection.up:
         return Alignment.topCenter;
-      case SwipeDirection.down:
-        return Alignment.bottomCenter;
-      case SwipeDirection.left:
-        return Alignment.centerLeft;
+      case SwipeDirection.upRight:
+        return Alignment.topRight;
       case SwipeDirection.right:
         return Alignment.centerRight;
+      case SwipeDirection.downRight:
+        return Alignment.bottomRight;
+      case SwipeDirection.down:
+        return Alignment.bottomCenter;
+      case SwipeDirection.downLeft:
+        return Alignment.bottomLeft;
+      case SwipeDirection.left:
+        return Alignment.centerLeft;
+      case SwipeDirection.upLeft:
+        return Alignment.topLeft;
     }
   }
 
@@ -60,13 +68,21 @@ class TargetWidget extends StatelessWidget {
   static EdgeInsets getPadding(SwipeDirection direction) {
     switch (direction) {
       case SwipeDirection.up:
-        return const EdgeInsets.only(top: 40);
-      case SwipeDirection.down:
-        return const EdgeInsets.only(bottom: 40);
-      case SwipeDirection.left:
-        return const EdgeInsets.only(left: 20);
+        return const EdgeInsets.only(top: 100);
+      case SwipeDirection.upRight:
+        return const EdgeInsets.only(top: 40, right: 20);
       case SwipeDirection.right:
         return const EdgeInsets.only(right: 20);
+      case SwipeDirection.downRight:
+        return const EdgeInsets.only(bottom: 180, right: 20);
+      case SwipeDirection.down:
+        return const EdgeInsets.only(bottom: 100);
+      case SwipeDirection.downLeft:
+        return const EdgeInsets.only(bottom: 180, left: 20);
+      case SwipeDirection.left:
+        return const EdgeInsets.only(left: 20);
+      case SwipeDirection.upLeft:
+        return const EdgeInsets.only(top: 40, left: 20);
     }
   }
 }

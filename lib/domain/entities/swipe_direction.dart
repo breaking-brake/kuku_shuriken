@@ -1,2 +1,11 @@
-/// スワイプ方向を表すEnum
-enum SwipeDirection { up, down, left, right }
+/// スワイプ方向を表すEnum（8方向対応）
+enum SwipeDirection {
+  up,
+  upRight,
+  right,
+  downRight,
+  down,
+  downLeft,
+  left,
+  upLeft,
+}
