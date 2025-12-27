@@ -24,10 +24,10 @@
 
 **目的**: Flutterプロジェクトの初期化と基本構造の作成
 
-- [ ] T001 Flutterプロジェクト構造を作成（lib/domain/、lib/presentation/、lib/data/）
-- [ ] T002 pubspec.yamlに依存パッケージを追加（appinio_swiper、audioplayers、flutter_lints）
-- [ ] T003 [P] pubspec.yamlにアセットパスを設定（assets/sounds/、assets/images/）
-- [ ] T004 [P] 分析オプションを設定（analysis_options.yaml）
+- [x] T001 Flutterプロジェクト構造を作成（lib/domain/、lib/presentation/、lib/data/）
+- [x] T002 pubspec.yamlに依存パッケージを追加（appinio_swiper、audioplayers、flutter_lints）
+- [x] T003 [P] pubspec.yamlにアセットパスを設定（assets/sounds/、assets/images/）
+- [x] T004 [P] 分析オプションを設定（analysis_options.yaml）
 
 ---
 
