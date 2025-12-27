@@ -39,23 +39,23 @@
 
 ### エンティティ
 
-- [ ] T005 [P] SwipeDirection enumを作成（lib/domain/entities/swipe_direction.dart）
-- [ ] T006 [P] Difficulty enumを作成（lib/domain/entities/difficulty.dart）
-- [ ] T007 [P] Questionエンティティを作成（lib/domain/entities/question.dart）
-- [ ] T008 [P] Targetエンティティを作成（lib/domain/entities/target.dart）
-- [ ] T009 GameStateエンティティを作成（lib/domain/entities/game_state.dart）※T005-T008に依存
-- [ ] T010 GameResultエンティティを作成（lib/domain/entities/game_result.dart）※T009に依存
+- [x] T005 [P] SwipeDirection enumを作成（lib/domain/entities/swipe_direction.dart）
+- [x] T006 [P] Difficulty enumを作成（lib/domain/entities/difficulty.dart）
+- [x] T007 [P] Questionエンティティを作成（lib/domain/entities/question.dart）
+- [x] T008 [P] Targetエンティティを作成（lib/domain/entities/target.dart）
+- [x] T009 GameStateエンティティを作成（lib/domain/entities/game_state.dart）※T005-T008に依存
+- [x] T010 GameResultエンティティを作成（lib/domain/entities/game_result.dart）※T009に依存
 
 ### ユースケース
 
-- [ ] T011 GameUseCaseインターフェースと実装を作成（lib/domain/usecases/game_usecase.dart）※T005-T010に依存
-- [ ] T012 AudioUseCaseインターフェースを作成（lib/domain/usecases/audio_usecase.dart）
+- [x] T011 GameUseCaseインターフェースと実装を作成（lib/domain/usecases/game_usecase.dart）※T005-T010に依存
+- [x] T012 AudioUseCaseインターフェースを作成（lib/domain/usecases/audio_usecase.dart）
 
 ### 音声サービス
 
-- [ ] T013 AudioUseCaseImplを実装（lib/data/audio/audio_player.dart）※T012に依存
-- [ ] T014 [P] 正解効果音ファイルを追加（assets/sounds/correct.mp3）
-- [ ] T015 [P] 不正解効果音ファイルを追加（assets/sounds/wrong.mp3）
+- [x] T013 AudioUseCaseImplを実装（lib/data/audio/audio_player.dart）※T012に依存
+- [x] T014 [P] 正解効果音ファイルを追加（assets/sounds/correct.mp3）
+- [x] T015 [P] 不正解効果音ファイルを追加（assets/sounds/wrong.mp3）
 
 **チェックポイント**: 基盤準備完了 - ユーザーストーリーの実装を開始可能
 
