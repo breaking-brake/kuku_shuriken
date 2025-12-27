@@ -4,21 +4,26 @@ set -e
 
 # Parse command line arguments
 JSON_MODE=false
+BRANCH_PREFIX=""
 ARGS=()
 
 for arg in "$@"; do
     case "$arg" in
-        --json) 
-            JSON_MODE=true 
+        --json)
+            JSON_MODE=true
             ;;
-        --help|-h) 
-            echo "Usage: $0 [--json]"
-            echo "  --json    Output results in JSON format"
-            echo "  --help    Show this help message"
-            exit 0 
+        --prefix=*)
+            BRANCH_PREFIX="${arg#--prefix=}"
             ;;
-        *) 
-            ARGS+=("$arg") 
+        --help|-h)
+            echo "Usage: $0 [--json] [--prefix=PREFIX]"
+            echo "  --json               Output results in JSON format"
+            echo "  --prefix=PREFIX      Specify branch prefix to strip (e.g., feat, fix)"
+            echo "  --help               Show this help message"
+            exit 0
+            ;;
+        *)
+            ARGS+=("$arg")
             ;;
     esac
 done
@@ -29,6 +34,15 @@ source "$SCRIPT_DIR/common.sh"
 
 # Get all paths and variables from common functions
 eval $(get_feature_paths)
+
+# If branch prefix is specified, strip it from current branch name
+if [[ -n "$BRANCH_PREFIX" && "$CURRENT_BRANCH" =~ ^${BRANCH_PREFIX}/(.+)$ ]]; then
+    CURRENT_BRANCH="${BASH_REMATCH[1]}"
+    # Re-evaluate feature directory with stripped branch name
+    FEATURE_DIR=$(find_feature_dir_by_prefix "$REPO_ROOT" "$CURRENT_BRANCH")
+    FEATURE_SPEC="$FEATURE_DIR/spec.md"
+    IMPL_PLAN="$FEATURE_DIR/plan.md"
+fi
 
 # Check if we're on a proper feature branch (only for git repos)
 check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
