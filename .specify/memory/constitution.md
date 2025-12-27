@@ -1,50 +1,104 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+==================
+バージョン変更: なし（初期作成） → 1.0.0
+追加セクション:
+  - Core Principles (5原則)
+  - 技術スタック
+  - 開発ワークフロー
+  - Governance
+削除セクション: なし
+テンプレート更新:
+  ✅ .specify/templates/plan-template.md - 憲章チェック対応済み
+  ✅ .specify/templates/spec-template.md - 変更不要
+  ✅ .specify/templates/tasks-template.md - 変更不要
+フォローアップTODO: なし
+-->
+
+# kuku_syuriken 憲章
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. クリーンアーキテクチャ
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+アプリケーションはレイヤー分離を厳格に守り、依存性の方向を制御する。
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+- **Presentation層**: UI/Widget、状態管理（BLoC/Riverpod等）
+- **Domain層**: ビジネスロジック、UseCase、Entity（フレームワーク非依存）
+- **Data層**: リポジトリ実装、データソース、API/DB接続
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**ルール**:
+- Domain層は他のどの層にも依存してはならない
+- Data層からDomain層への依存はインターフェース経由のみ
+- Presentation層はDomain層のUseCaseを通じてのみビジネスロジックにアクセスする
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### II. ゲーム体験優先
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+ユーザー体験とパフォーマンスを最優先する。
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+- 60fps維持を常に意識した実装を行う
+- アニメーションやインタラクションの滑らかさを重視する
+- 重い処理はIsolateやcompute関数で分離する
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### III. シンプルさ優先
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+過剰な抽象化や先回り設計を避け、必要なものだけを実装する。
+
+- YAGNI（You Aren't Gonna Need It）原則を守る
+- 3回同じパターンが出るまで抽象化しない
+- 複雑さを追加する前に、よりシンプルな解決策がないか検討する
+
+### IV. テスタビリティ
+
+テスト可能な設計を維持する。
+
+- 依存性注入（DI）を活用し、モック可能な設計にする
+- ビジネスロジックはWidgetから分離してユニットテスト可能にする
+- 外部依存（API、ストレージ）は抽象化してテスト時に差し替え可能にする
+
+### V. 段階的品質向上
+
+初期は動くコードを優先し、必要に応じて品質を向上させる。
+
+- まず動作する最小限の実装を行う
+- リファクタリングは機能追加とは別のタイミングで行う
+- 技術的負債は意識的に管理し、適切なタイミングで解消する
+
+## 技術スタック
+
+| カテゴリ | 技術 |
+|---------|------|
+| フレームワーク | Flutter |
+| 言語 | Dart (SDK ^3.10.4) |
+| プラットフォーム | iOS |
+| テスト | flutter_test |
+| リンター | flutter_lints |
+
+## 開発ワークフロー
+
+### コード品質
+
+- `flutter analyze` でリント警告をゼロに保つ
+- 新機能追加時はユニットテストを追加することを推奨（必須ではない）
+- PRレビューでアーキテクチャ原則への準拠を確認する
+
+### ブランチ戦略
+
+- `main`: 安定版ブランチ
+- 機能開発は機能ブランチで行い、PRでマージする
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+この憲章はプロジェクトの開発指針として機能する。
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**改訂プロセス**:
+1. 憲章の変更提案はPRとして提出する
+2. 変更内容を明文化し、影響範囲を説明する
+3. 承認後、バージョンを更新して反映する
+
+**バージョニング**:
+- MAJOR: 原則の削除や根本的な変更
+- MINOR: 新しい原則やセクションの追加
+- PATCH: 文言の明確化や誤字修正
+
+**Version**: 1.0.0 | **Ratified**: 2025-12-27 | **Last Amended**: 2025-12-27
