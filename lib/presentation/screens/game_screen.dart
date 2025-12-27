@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import '../../data/audio/audio_player.dart';
 import '../../domain/entities/difficulty.dart';
-import '../../domain/entities/game_result.dart';
 import '../../domain/entities/game_state.dart';
 import '../../domain/entities/swipe_direction.dart';
 import '../../domain/usecases/audio_usecase.dart';
@@ -11,6 +10,7 @@ import '../../domain/usecases/game_usecase.dart';
 import '../widgets/question_card.dart';
 import '../widgets/shuriken_animation.dart';
 import '../widgets/target_widget.dart';
+import 'result_screen.dart';
 
 /// ゲームプレイ画面
 class GameScreen extends StatefulWidget {
@@ -120,7 +120,7 @@ class _GameScreenState extends State<GameScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => _ResultPlaceholder(result: result),
+        builder: (context) => ResultScreen(result: result),
       ),
     );
   }
@@ -132,6 +132,87 @@ class _GameScreenState extends State<GameScreen> {
       body: SafeArea(
         child: Stack(
           children: [
+            // ヘッダー（進捗表示と連続正解数）
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // 進捗表示
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Text(
+                        '${_gameState.currentQuestionIndex + 1}/${_gameState.questions.length}もん',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigo,
+                        ),
+                      ),
+                    ),
+
+                    // 連続正解数表示
+                    if (_gameState.currentStreak > 0)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.orange.withValues(alpha: 0.3),
+                              blurRadius: 4,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                        child: Row(
+                          children: [
+                            const Text(
+                              '🔥',
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            const SizedBox(width: 4),
+                            Text(
+                              '${_gameState.currentStreak}れんぞく',
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+
             // 的の配置
             ..._buildTargets(),
 
@@ -184,65 +265,10 @@ class _GameScreenState extends State<GameScreen> {
           padding: TargetWidget.getPadding(target.direction),
           child: TargetWidget(
             target: target,
-            showHit: _isAnimating &&
-                _lastSwipeDirection == target.direction,
+            showHit: _isAnimating && _lastSwipeDirection == target.direction,
           ),
         ),
       );
     }).toList();
-  }
-}
-
-/// リザルト画面のプレースホルダー（フェーズ5で正式に実装）
-class _ResultPlaceholder extends StatelessWidget {
-  final GameResult result;
-
-  const _ResultPlaceholder({required this.result});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue[50],
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              'けっか',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              '${result.correctCount}/${result.totalQuestions}問 正解！',
-              style: const TextStyle(fontSize: 24),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              '正答率: ${result.accuracy.toStringAsFixed(0)}%',
-              style: const TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 10),
-            Text(
-              '最大: ${result.maxStreak}連続',
-              style: const TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GameScreen(
-                      difficulty: result.difficulty,
-                    ),
-                  ),
-                );
-              },
-              child: const Text('もう一度'),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 }

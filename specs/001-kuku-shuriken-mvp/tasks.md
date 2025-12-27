@@ -107,12 +107,12 @@
 
 ### ユーザーストーリー3の実装
 
-- [ ] T028 [US3] GameScreenに進捗表示（n/10問）を追加
-- [ ] T029 [US3] GameScreenに連続正解数表示を追加
-- [ ] T030 [US3] ResultScreenを実装 - 正答数、正答率、最大連続正解数を表示（lib/presentation/screens/result_screen.dart）
-- [ ] T031 [US3] ResultScreenに「もう一度」ボタンを追加 - 同じ難易度でGameScreenへ遷移
-- [ ] T032 [US3] ResultScreenに「難易度を変える」ボタンを追加 - DifficultyScreenへ遷移
-- [ ] T033 [US3] GameScreenから10問回答後にResultScreenへ遷移するロジックを追加
+- [x] T028 [US3] GameScreenに進捗表示（n/10問）を追加
+- [x] T029 [US3] GameScreenに連続正解数表示を追加
+- [x] T030 [US3] ResultScreenを実装 - 正答数、正答率、最大連続正解数を表示（lib/presentation/screens/result_screen.dart）
+- [x] T031 [US3] ResultScreenに「もう一度」ボタンを追加 - 同じ難易度でGameScreenへ遷移
+- [x] T032 [US3] ResultScreenに「難易度を変える」ボタンを追加 - DifficultyScreenへ遷移
+- [x] T033 [US3] GameScreenから10問回答後にResultScreenへ遷移するロジックを追加
 
 **チェックポイント**: ゲーム中のスコア表示と終了時のリザルト表示が動作
 
