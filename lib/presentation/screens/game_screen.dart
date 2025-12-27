@@ -1,5 +1,5 @@
-import 'package:appinio_swiper/appinio_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:shuriken_swiper/shuriken_swiper.dart';
 
 import '../../data/audio/audio_player.dart';
 import '../../domain/entities/difficulty.dart';
@@ -27,7 +27,7 @@ class _GameScreenState extends State<GameScreen> {
   late GameUseCase _gameUseCase;
   late AudioUseCase _audioUseCase;
   late GameState _gameState;
-  late AppinioSwiperController _swiperController;
+  late ShurikenSwiperController _swiperController;
 
   bool _isAnimating = false;
   SwipeDirection? _lastSwipeDirection;
@@ -39,7 +39,7 @@ class _GameScreenState extends State<GameScreen> {
     super.initState();
     _gameUseCase = GameUseCaseImpl();
     _audioUseCase = AudioUseCaseImpl();
-    _swiperController = AppinioSwiperController();
+    _swiperController = ShurikenSwiperController();
     _gameState = _gameUseCase.startGame(widget.difficulty);
   }
 
@@ -49,25 +49,34 @@ class _GameScreenState extends State<GameScreen> {
     super.dispose();
   }
 
-  SwipeDirection _convertDirection(AxisDirection direction) {
+  SwipeDirection _convertDirection(EightDirection direction) {
     switch (direction) {
-      case AxisDirection.up:
+      case EightDirection.up:
         return SwipeDirection.up;
-      case AxisDirection.down:
+      case EightDirection.down:
         return SwipeDirection.down;
-      case AxisDirection.left:
+      case EightDirection.left:
         return SwipeDirection.left;
-      case AxisDirection.right:
+      case EightDirection.right:
         return SwipeDirection.right;
+      // Diagonal directions - map to nearest cardinal for now
+      case EightDirection.upRight:
+        return SwipeDirection.right;
+      case EightDirection.downRight:
+        return SwipeDirection.right;
+      case EightDirection.downLeft:
+        return SwipeDirection.left;
+      case EightDirection.upLeft:
+        return SwipeDirection.left;
     }
   }
 
   /// 難易度に応じたスワイプ方向を制限する
-  SwipeOptions _getAllowedSwipeOptions() {
+  EightSwipeOptions _getAllowedSwipeOptions() {
     final directions = _gameState.currentTargets
         .map((t) => t.direction)
         .toSet();
-    return SwipeOptions.only(
+    return EightSwipeOptions.only(
       up: directions.contains(SwipeDirection.up),
       down: directions.contains(SwipeDirection.down),
       left: directions.contains(SwipeDirection.left),
@@ -75,7 +84,7 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-  void _handleSwipe(int index, AxisDirection direction) {
+  void _handleSwipe(int index, EightDirection direction) {
     if (_isAnimating) return;
 
     final swipeDirection = _convertDirection(direction);
@@ -254,7 +263,7 @@ class _GameScreenState extends State<GameScreen> {
                   ? SizedBox(
                       width: 180,
                       height: 180,
-                      child: AppinioSwiper(
+                      child: ShurikenSwiper(
                         controller: _swiperController,
                         cardCount: 1,
                         swipeOptions: _getAllowedSwipeOptions(),
